@@ -18,9 +18,9 @@ public class UserServiceImpl implements UserService {
     JwtUtil jwtUtil;
 
     @Override
-    public String save(LoginUser user) {
+    public String saveUser(LoginUser user) {
         User newUser = new User();
-        newUser.setUsername(user.getUsername());
+        newUser.setUserName(user.getUserName());
         newUser.setPassword(user.getPassword());
         userRepository.save(newUser);
         return "User Added Successfully";
@@ -30,14 +30,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public String loginUser(LoginUser user) {
 
-        User userDetails = userRepository.findByUsername(user.getUsername());
+        User userDetails = userRepository.findByUserName(user.getUserName());
 
         if(userDetails == null)
             return "Incorrect Credentials";
 
         if(user.getPassword().equals(userDetails.getPassword())) {
 
-            final String jwt = jwtUtil.createToken(user.getUsername());
+            final String jwt = jwtUtil.createToken(user.getUserName());
             return jwt;
         }
         else {
