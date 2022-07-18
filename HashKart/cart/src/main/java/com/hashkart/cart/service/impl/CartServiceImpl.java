@@ -1,7 +1,7 @@
 package com.hashkart.cart.service.impl;
 
 import com.hashkart.cart.common.*;
-import com.hashkart.cart.entities.Cart_Details;
+import com.hashkart.cart.entities.CartDetails;
 import com.hashkart.cart.repositories.CartRepository;
 import com.hashkart.cart.repositories.PaymentFeignClient;
 import com.hashkart.cart.service.CartService;
@@ -22,7 +22,7 @@ public class CartServiceImpl implements CartService {
     PaymentFeignClient paymentFeignClient;
 
     @Override
-    public String addProductToCart(Cart_Details product_details) {
+    public String addProductToCart(CartDetails product_details) {
         try {
             cartRepository.save(product_details);
         }
@@ -34,14 +34,14 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public ProductsInCart getProductsInCart(int user_id) {
+    public ProductsInCart getProductsInCart(int userId) {
         ProductsInCart productsInCart = new ProductsInCart();
-        List<Cart_Details> cart_detailsList = cartRepository.findAllByUserId(user_id);
+        List<CartDetails> cart_detailsList = cartRepository.findAllByUserId(userId);
         if(cart_detailsList.isEmpty())
             return null;
         else {
-            productsInCart.setCart_detailsList(cart_detailsList);
-            productsInCart.setTotalPrice(cartRepository.findTotalPrice(user_id));
+            productsInCart.setCartDetailsList(cart_detailsList);
+            productsInCart.setTotalPrice(cartRepository.findTotalPrice(userId));
             return productsInCart;
         }
     }
@@ -52,21 +52,21 @@ public class CartServiceImpl implements CartService {
         String response = "";
         ProductsInCart productsInCart = request.getProductsInCart();
         Payment payment = request.getPayment();
-        payment.setUser_id(productsInCart.getCart_detailsList().get(0).getUser_id());
+        payment.setUserId(productsInCart.getCartDetailsList().get(0).getUserId());
         payment.setAmount(productsInCart.getTotalPrice());
 
         //REST call
         Payment paymentResponse = paymentFeignClient.doPayment(payment);
 
-        if(paymentResponse.getPayment_status().equals("success")){
+        if(paymentResponse.getPaymentStatus().equals("success")){
             response = "Payment processing successful and Order placed";
-            cartRepository.deleteByUser_Id(productsInCart.getCart_detailsList().get(0).getUser_id());
+            cartRepository.deleteByUserId(productsInCart.getCartDetailsList().get(0).getUserId());
         }
         else {
             response = "there is a failure in Payment API, order added to cart";
         }
 
-        return new TransactionResponse(productsInCart,paymentResponse.getTransaction_id(), response);
+        return new TransactionResponse(productsInCart,paymentResponse.getTransactionId(), response);
     }
 
 

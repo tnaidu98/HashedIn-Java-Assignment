@@ -1,6 +1,6 @@
 package com.hashkart.cart.common;
 
-import com.hashkart.cart.entities.Cart_Details;
+import com.hashkart.cart.entities.CartDetails;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductsInCart {
 
-    List<Cart_Details> cart_detailsList;
+    List<CartDetails> cartDetailsList;
 
     double totalPrice;
 

@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 public class Payment {
 
     private int paymentId;
-    private int user_id;
-    private String payment_status;
-    private String transaction_id;
+    private int userId;
+    private String paymentStatus;
+    private String transactionId;
     private double amount;
+
 }
