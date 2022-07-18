@@ -1,13 +1,14 @@
 package com.hashkart.product.service;
 
-import com.hashkart.product.entities.Product_Categories;
-import com.hashkart.product.entities.Product_Details;
+import com.hashkart.product.entities.ProductCategories;
+import com.hashkart.product.entities.ProductDetails;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
 
-    public List<Product_Categories> showProducts();
+    public List<ProductCategories> showProducts();
 
-    public List<Product_Details> showProductsByCategory(String category_name);
+    public List<ProductDetails> showProductsByCategory(String categoryName);
 }

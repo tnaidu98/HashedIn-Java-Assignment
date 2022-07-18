@@ -20,14 +20,14 @@ public class ProductController {
     ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<?> showProducts(@RequestParam(defaultValue = "empty") String category_name,
+    public ResponseEntity<?> showProducts(@RequestParam(defaultValue = "empty") String categoryName,
                                           HttpServletResponse response, HttpServletRequest request) {
 
-        if (category_name.equals("empty")) {
+        if (categoryName.equals("empty")) {
             return new ResponseEntity<>(productService.showProducts(),HttpStatus.OK);
         }
         else {
-            return new ResponseEntity<>(productService.showProductsByCategory(category_name),HttpStatus.OK);
+            return new ResponseEntity<>(productService.showProductsByCategory(categoryName),HttpStatus.OK);
         }
     }
 
