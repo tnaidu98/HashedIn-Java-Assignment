@@ -3,11 +3,11 @@ package com.hashkart.cart.service.impl;
 import com.hashkart.cart.common.*;
 import com.hashkart.cart.entities.Cart_Details;
 import com.hashkart.cart.repositories.CartRepository;
+import com.hashkart.cart.repositories.PaymentFeignClient;
 import com.hashkart.cart.service.CartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class CartServiceImpl implements CartService {
     CartRepository cartRepository;
 
     @Autowired
-    RestTemplate restTemplate;
+    PaymentFeignClient paymentFeignClient;
 
     @Override
     public String addProductToCart(Cart_Details product_details) {
@@ -56,7 +56,7 @@ public class CartServiceImpl implements CartService {
         payment.setAmount(productsInCart.getTotalPrice());
 
         //REST call
-        Payment paymentResponse = restTemplate.postForObject("http://PAYMENT-SERVICE/payment/doPayment", payment, Payment.class);
+        Payment paymentResponse = paymentFeignClient.doPayment(payment);
 
         if(paymentResponse.getPayment_status().equals("success")){
             response = "Payment processing successful and Order placed";
