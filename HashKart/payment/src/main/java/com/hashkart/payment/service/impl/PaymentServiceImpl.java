@@ -1,6 +1,5 @@
 package com.hashkart.payment.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hashkart.payment.entities.Payment;
 import com.hashkart.payment.repositories.PaymentRepository;
 import com.hashkart.payment.service.PaymentService;
@@ -21,8 +20,8 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment doPayment(Payment payment) {
 
-        payment.setPayment_status(paymentProcessing());
-        payment.setTransaction_id(UUID.randomUUID().toString());
+        payment.setPaymentStatus(paymentProcessing());
+        payment.setTransactionId(UUID.randomUUID().toString());
         return paymentRepository.save(payment);
     }
 
@@ -32,8 +31,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment findPaymentDetailsByUserId(int user_id) {
-        Payment payment=paymentRepository.findByUser_Id(user_id);
+    public Payment findPaymentDetailsByUserId(int userId) {
+        Payment payment=paymentRepository.findByUserId(userId);
         return payment ;
     }
 

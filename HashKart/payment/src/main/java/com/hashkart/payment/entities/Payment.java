@@ -20,16 +20,16 @@ public class Payment {
             allocationSize = 1
     )
     @Column(name = "payment_id")
-    private int payment_id;
+    private int paymentId;
 
     @Column(name = "user_id")
-    private int user_id;
+    private int userId;
 
     @Column(name = "payment_status")
-    private String payment_status;
+    private String paymentStatus;
 
     @Column(name = "transaction_id")
-    private String transaction_id;
+    private String transactionId;
 
     @Column(name = "amount")
     private double amount;

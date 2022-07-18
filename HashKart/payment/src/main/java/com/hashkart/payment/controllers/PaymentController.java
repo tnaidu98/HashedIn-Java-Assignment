@@ -17,7 +17,7 @@ public class PaymentController {
         }
 
         @GetMapping("/{orderId}")
-        public Payment findPaymentDetailsByUserId(@PathVariable int user_id){
-            return paymentService.findPaymentDetailsByUserId(user_id);
+        public Payment findPaymentDetailsByUserId(@PathVariable int userId){
+            return paymentService.findPaymentDetailsByUserId(userId);
         }
 }
